@@ -48,3 +48,5 @@ void Object::createtexture(const char* address, SDL_Renderer* ren)
 {
     tex = texturemanager::Texture(address, ren);
 }
+
+

@@ -1,6 +1,13 @@
 #include"make/player.h"
 
-void Player::Render(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect src, SDL_Rect dest)
+void Player::Render(SDL_Renderer* ren)
 {
-    SDL_RenderCopy(ren, tex, &src, &dest);
+    SDL_RenderCopy(ren, gettexture(), &getsrc(), &getdest());
+}
+
+
+void Player::Update()
+{
+    setsrc(0, 0, 821, 313);
+    setdest(50, 400, 410, 155);
 }

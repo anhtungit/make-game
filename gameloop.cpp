@@ -1,12 +1,13 @@
 #include "make/gameloop.h"
 
+
 gameloop::gameloop()
 {
     window = NULL;
     renderer = NULL;
     GameState = false;
-    p.setsrc(0,0,1200,600);
-    p.setdest(10,20,1200,600);
+    
+    
 }
 
 bool gameloop::getGameState()
@@ -16,17 +17,22 @@ bool gameloop::getGameState()
 
 void gameloop::Init()
 {
+    
     SDL_Init(SDL_INIT_EVERYTHING);
     window = SDL_CreateWindow("anh dong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     if (window)
     {
-        renderer = SDL_CreateRenderer(window, -1, 0);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
         if (renderer)
         {
             cout << "khoi tao thanh cong\n";
             GameState = true;
-            p.createtexture("image/ronaldo.png", renderer);
-            b.createtexture("imagenenchuan.png", renderer);
+            b.createtexture("image/back.png", renderer);
+            p.createtexture("image/xe.png", renderer);
+            banh1.createtexture("image/banhxe.png", renderer);
+            banh2.createtexture("image/banhxe.png", renderer);
+            sun.setsun(WIDTH / 2, 500 + SUN_RADIUS, sunMinY, sunMaxY);
+            road.setroad(0, 30, 5, 100);
         }
         else
             cout << "khong the tao render\n";
@@ -44,20 +50,28 @@ void gameloop::Event()
     }
 }
 
-
 void gameloop::update()
 {
-   
+    sun.update();
+    p.Update();
+    banh1.Updatebanh1();
+    banh2.Updatebanh2();
+    
+    road.update();
 }
-
 
 void gameloop::Render()
 {
     SDL_RenderClear(renderer);
-    p.Render(renderer, p.gettexture(), p.getsrc(), p.getdest());
-    b.Render(renderer, b.gettexture(),b.getsrc(), b.getdest());
+    sky.drawDynamicSky(renderer, WIDTH, HEIGHT, sun.getY(), sunMinY, sunMaxY);
+    sun.drawGradientSun(renderer, sun.getX(), sun.getY(), SUN_RADIUS);
+    road.draw(renderer, WIDTH, HEIGHT);
+    p.Render(renderer);
+    banh1.RenderCopyEx(renderer);
+    banh2.RenderCopyEx(renderer);
     SDL_RenderPresent(renderer);
-} 
+    SDL_Delay(16);
+}
 
 void gameloop::Clear()
 {
