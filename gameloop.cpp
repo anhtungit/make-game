@@ -27,12 +27,13 @@ void gameloop::Init()
         {
             cout << "khoi tao thanh cong\n";
             GameState = true;
-            b.createtexture("image/back.png", renderer);
             p.createtexture("image/xe.png", renderer);
             banh1.createtexture("image/banhxe.png", renderer);
             banh2.createtexture("image/banhxe.png", renderer);
             sun.setsun(WIDTH / 2, 500 + SUN_RADIUS, sunMinY, sunMaxY);
-            road.setroad(0, 30, 5, 100);
+            road.setroad(WIDTH,60, 30, 1, 100);
+            fence.setfence(WIDTH, 10, 30, 30, 100);
+            initSnowflakes(100, WIDTH, HEIGHT);
         }
         else
             cout << "khong the tao render\n";
@@ -56,8 +57,9 @@ void gameloop::update()
     p.Update();
     banh1.Updatebanh1();
     banh2.Updatebanh2();
-    
+    fence.update();
     road.update();
+     updateSnowflakes(WIDTH, HEIGHT);
 }
 
 void gameloop::Render()
@@ -65,12 +67,15 @@ void gameloop::Render()
     SDL_RenderClear(renderer);
     sky.drawDynamicSky(renderer, WIDTH, HEIGHT, sun.getY(), sunMinY, sunMaxY);
     sun.drawGradientSun(renderer, sun.getX(), sun.getY(), SUN_RADIUS);
-    road.draw(renderer, WIDTH, HEIGHT);
+    drawMountains(renderer,WIDTH, HEIGHT);
+    road.draw(renderer, HEIGHT, WIDTH);
+    fence.draw(renderer, WIDTH, HEIGHT);
     p.Render(renderer);
     banh1.RenderCopyEx(renderer);
     banh2.RenderCopyEx(renderer);
+    drawSnowflakes(renderer);
     SDL_RenderPresent(renderer);
-    SDL_Delay(16);
+    
 }
 
 void gameloop::Clear()

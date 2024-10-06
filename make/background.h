@@ -1,9 +1,4 @@
-#pragma once
-#include "object.h"
+#include "texturemanager.h"
 
-class Background : public Object
-{
-private:
-public:
-    void Render(SDL_Renderer *ren);
-};
+#define PI 3.14159265
+void drawMountains(SDL_Renderer* renderer,int width, int height );

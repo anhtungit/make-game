@@ -11,7 +11,7 @@ void Sky::drawDynamicSky(SDL_Renderer* renderer, int screenWidth, int screenHeig
     // Màu xanh đậm ban đầu (khi mặt trời ở vị trí thấp nhất)
     Uint8 startRed = 0;
     Uint8 startGreen = 0;
-    Uint8 startBlue = 139;  // Dark blue
+    Uint8 startBlue = 50;  // Dark blue
 
     // Màu xanh nhạt khi mặt trời ở vị trí cao nhất (noon)
     Uint8 endRed = 135;
